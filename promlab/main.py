@@ -1,8 +1,8 @@
-from json import JSONDecodeError
 from typing import Any, Dict
 
 from fastapi import FastAPI
-from fastapi.exceptions import HTTPException
+
+from promlab.resources import router
 
 
 def create_application() -> FastAPI:
@@ -14,7 +14,7 @@ def create_application() -> FastAPI:
 
 
 def configure_routes(application: FastAPI) -> None:
-    pass
+    application.include_router(router)
 
 
 def configure_telemetry(application: FastAPI) -> None:

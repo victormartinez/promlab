@@ -1,5 +1,6 @@
 from typing import Any, Dict
 
+from prometheus_client import make_asgi_app
 from fastapi import FastAPI
 
 from promlab.resources import router
@@ -18,7 +19,9 @@ def configure_routes(application: FastAPI) -> None:
 
 
 def configure_telemetry(application: FastAPI) -> None:
-    pass
+    metrics_app = make_asgi_app()
+    application.mount("/metrics", metrics_app)
+
 
 
 def configure_healthcheck(app: FastAPI) -> None:

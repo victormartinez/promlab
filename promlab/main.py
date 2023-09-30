@@ -4,6 +4,7 @@ from prometheus_client import make_asgi_app
 from fastapi import FastAPI
 
 from promlab.resources import router
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 def create_application() -> FastAPI:
@@ -21,6 +22,8 @@ def configure_routes(application: FastAPI) -> None:
 def configure_telemetry(application: FastAPI) -> None:
     metrics_app = make_asgi_app()
     application.mount("/metrics", metrics_app)
+    Instrumentator().instrument(application).expose(application)
+
 
 
 
